@@ -1,5 +1,5 @@
 import pool from "../../lib/db";
-import { allowCors } from "../../lib/nocors";
+import { allowCors } from "../../lib/cors";
 
 // Valida se o metodo que stá a ser chamado é o correto : "GET"
 async function handler(req, res) {
