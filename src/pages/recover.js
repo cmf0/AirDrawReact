@@ -74,7 +74,7 @@ export default function RecoverPassword() {
           
           {/* ✅ Logo e título */}
           <div className="flex items-center space-x-3 mb-4">
-            <Image src="/nextjs-icon.svg" alt="Next.js Logo" width={40} height={40} />
+            <Image src="/logo.png" alt="AirDraw Logo" width={40} height={40} />
             <h2 className="text-2xl font-semibold">{messages.recover?.title}</h2>
           </div>
 

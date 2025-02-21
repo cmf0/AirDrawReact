@@ -10,7 +10,7 @@ export default function Welcome() {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-black text-white">
       {/* Logotipo e título */}
       <div className="flex items-center space-x-4 mb-8">
-        <Image src="/nextjs-icon.svg" alt="Next.js Logo" width={60} height={60} />
+        <Image src="/logo.png" alt="AirDraw Logo" width={60} height={60} />
         <h1 className="text-4xl font-bold text-white">Página do Utilizador</h1>
       </div>
 
