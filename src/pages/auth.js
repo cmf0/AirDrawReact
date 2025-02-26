@@ -27,7 +27,7 @@ export default function Auth() {
 
     async function checkDBStatus() {
       try {
-        const { data, status } = await axiosInstance.get("/api/db-status", {
+        const { data, status } = await axiosInstance.get("api/db-status", {
           timeout: 5000,
           validateStatus: () => true,
         });
@@ -70,7 +70,7 @@ export default function Auth() {
     }
 
     try {
-      const { data } = await axiosInstance.post("/api/loginDB", {
+      const { data } = await axiosInstance.post("api/loginDB", {
         username: formData.email,
         password: formData.password,
       });
