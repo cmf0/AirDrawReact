@@ -9,6 +9,7 @@ import Button from "../components/ui/Button"; // Componente Button
 import Image from "next/image"; // Componente Image
 import { FiAlertTriangle } from "react-icons/fi"; // Ícone de erro
 import axiosInstance from "../lib/axiosInstance"; // 🚀 Importação do axiosInstance
+import Loading from "../components/ui/Loading"; // Componente de Loading
 //import PwaInstallButton from "@/components/PwaInstallButton";
 
 export default function Auth() {
@@ -102,10 +103,7 @@ export default function Auth() {
         
         {/* ✅ Animação de Carregamento antes de renderizar o conteúdo */}
         {isLoading && (
-          <div className="absolute inset-0 bg-black bg-opacity-80 flex flex-col items-center justify-center z-50">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-white mb-4"></div>
-            <p className="text-lg font-semibold text-white">A carregar...</p>
-          </div>
+          <Loading/>
         )}
 
         {/* ✅ Formulário de Login */}
