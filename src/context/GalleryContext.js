@@ -18,9 +18,21 @@ export function GalleryProvider({ children }) {
   // Fetch the JWT token from the session
   const fetchAuthToken = async () => {
     try {
+      // First try to get the token from localStorage
+      const localToken = localStorage.getItem('auth_token');
+      if (localToken) {
+        console.log("Auth token found in localStorage");
+        setAuthToken(localToken);
+        return localToken;
+      }
+      
+      // If not in localStorage, try to get it from the session API
+      console.log("No token in localStorage, trying session API");
       const { data } = await axiosInstance.get("/api/session");
       if (data.valid && data.token) {
-        console.log("Auth token obtained successfully");
+        console.log("Auth token obtained from session API");
+        // Save the token to localStorage for future use
+        localStorage.setItem('auth_token', data.token);
         setAuthToken(data.token);
         return data.token;
       } else {

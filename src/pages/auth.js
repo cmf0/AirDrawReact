@@ -76,6 +76,12 @@ export default function Auth() {
         password: formData.password,
       });
 
+      // Store the token in localStorage for use in API requests
+      if (data.token) {
+        localStorage.setItem('auth_token', data.token);
+        console.log('Token stored in localStorage');
+      }
+
       toast.success(messages.auth?.login_success);
       setTimeout(() => router.push("/fileUp"), 1000);
     } catch (error) {
