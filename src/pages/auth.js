@@ -72,7 +72,7 @@ export default function Auth() {
 
     try {
       const { data } = await axiosInstance.post("api/loginDB", {
-        username: formData.email,
+        email: formData.email,
         password: formData.password,
       });
 
