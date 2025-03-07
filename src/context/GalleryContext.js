@@ -48,22 +48,47 @@ export function GalleryProvider({ children }) {
       }
       
       // Make the request with the auth token
+      console.log("Fetching images with auth token...");
       const response = await axios.get(`${API_URL}/api/pinata?timestamp=${new Date().getTime()}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
       
-      console.log("Files fetched successfully:", response.data);
+      console.log("API Response:", JSON.stringify(response.data, null, 2));
       
-      // Filter out any files that were deleted in this session
-      const filteredFiles = response.data.images ? response.data.images.filter(
-        file => !deletedFilesRef.current.has(file.ipfsHash)
-      ) : [];
-      
-      setFiles(filteredFiles);
+      // Check the structure of the response
+      if (response.data.success && Array.isArray(response.data.images)) {
+        console.log(`Found ${response.data.images.length} images in response`);
+        
+        // Map the response to the expected format with validation
+        const processedImages = response.data.images
+          .filter(img => img && img.ipfsHash) // Filter out any items with undefined ipfsHash
+          .map(img => {
+            console.log("Processing image:", img);
+            return {
+              ipfsHash: img.ipfsHash,
+              createdAt: img.createdAt || new Date().toISOString(),
+              url: `https://gateway.pinata.cloud/ipfs/${img.ipfsHash}`
+            };
+          });
+        
+        console.log("Processed images:", processedImages);
+        
+        // Filter out any files that were deleted in this session
+        const filteredFiles = processedImages.filter(
+          file => !deletedFilesRef.current.has(file.ipfsHash)
+        );
+        
+        setFiles(filteredFiles);
+      } else {
+        console.error("Unexpected response format:", response.data);
+        setFiles([]);
+        showMessage("Error: Unexpected response format from server");
+      }
     } catch (error) {
-      console.error("Error fetching files:", error.message);
+      console.error("Error fetching files:", error);
+      console.error("Error details:", error.response?.data || error.message);
       setFiles([]);
       showMessage("Error loading gallery: " + (error.response?.data?.error || error.message));
     } finally {
