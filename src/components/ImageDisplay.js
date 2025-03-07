@@ -1,10 +1,9 @@
 import { toast } from "react-toastify";
 import { useGallery } from "../context/GalleryContext";
-import axios from "axios";
 import { useState, useEffect } from "react";
 
 export default function ImageDisplay() {
-  const { files, setFiles, loading, triggerRefresh } = useGallery();
+  const { files, loading, deleteFile } = useGallery();
   const API_URL = process.env.NEXT_PUBLIC_APIS_URL_REMOTE;
   const [imageErrors, setImageErrors] = useState({});
 
@@ -13,23 +12,16 @@ export default function ImageDisplay() {
     console.log("Files in ImageDisplay:", files);
   }, [files]);
 
-  const deleteFile = async (hash) => {
+  // Handle delete button click
+  const handleDelete = async (hash) => {
     const confirmDelete = window.confirm("Tem a certeza que deseja apagar este ficheiro?");
     if (!confirmDelete) return;
 
-    try {
-      toast.info("A apagar ficheiro na Blockchain ...");
-      await axios.delete(`${API_URL}/api/pinata?hash=${hash}`);
-      
-      // Update local state immediately
-      setFiles(prevFiles => prevFiles.filter(file => file.ipfsHash !== hash));
-      
+    toast.info("A apagar ficheiro na Blockchain ...");
+    const success = await deleteFile(hash);
+    
+    if (success) {
       toast.success("Ficheiro apagado com sucesso !");
-      
-      // No automatic refresh needed - the file is already removed from local state
-    } catch (error) {
-      console.error("Erro ao apagar o ficheiro:", error.response?.data || error.message);
-      toast.error(error.response?.data?.error || "Erro ao apagar o ficheiro na Blockchain");
     }
   };
 
@@ -115,7 +107,7 @@ export default function ImageDisplay() {
                   {file.createdAt ? new Date(file.createdAt).toLocaleDateString() : 'No date'}
                 </div>
                 <button
-                  onClick={() => deleteFile(file.ipfsHash)}
+                  onClick={() => handleDelete(file.ipfsHash)}
                   style={{
                     marginTop: "5px",
                     marginBottom: "10px",

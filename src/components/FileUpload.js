@@ -1,11 +1,10 @@
 import { useState, useRef } from "react";
 import { useGallery } from "../context/GalleryContext";
 import { toast } from "react-toastify";
-import axios from "axios";
+import axiosInstance from "../lib/axiosInstance"; // Import the axios instance with credentials
 
 export default function FileUpload() {
   // Define a URL da API com base no ambiente
-  const API_URL = process.env.NEXT_PUBLIC_APIS_URL_REMOTE;
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef(null);
   const { triggerRefresh } = useGallery();
@@ -25,8 +24,8 @@ export default function FileUpload() {
       setLoading(true);
       toast.info("A carregar ficheiro na Blockchain ...");
       
-      console.log('Uploading to:', `${API_URL}/api/pinata`); // Debug URL
-      const response = await axios.post(`${API_URL}/api/pinata`, formData, {
+      console.log('Uploading file to blockchain...'); // Debug message
+      const response = await axiosInstance.post('/api/pinata', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

@@ -49,11 +49,7 @@ export function GalleryProvider({ children }) {
       
       // Make the request with the auth token
       console.log("Fetching images with auth token...");
-      const response = await axios.get(`${API_URL}/api/pinata?timestamp=${new Date().getTime()}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
+      const response = await axiosInstance.get(`/api/pinata?timestamp=${new Date().getTime()}`);
       
       // Log the raw response for debugging
       console.log("Raw API Response:", response);
@@ -149,20 +145,21 @@ export function GalleryProvider({ children }) {
   // Delete a file using the auth token
   const deleteFile = async (ipfsHash) => {
     try {
+      // Get the token if we don't have it yet
       const token = authToken || await fetchAuthToken();
       
       if (!token) {
+        console.error("No authentication token available");
         showMessage("Authentication required to delete files");
         return false;
       }
       
-      await axios.delete(`${API_URL}/api/pinata?hash=${ipfsHash}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
+      console.log(`Deleting file with hash: ${ipfsHash}`);
+      const response = await axiosInstance.delete(`/api/pinata?hash=${ipfsHash}`);
       
-      // Add to deleted files set
+      console.log("Delete response:", response.data);
+      
+      // Add to deleted files set to prevent it from reappearing
       deletedFilesRef.current.add(ipfsHash);
       
       // Remove from current files
@@ -172,6 +169,7 @@ export function GalleryProvider({ children }) {
       return true;
     } catch (error) {
       console.error("Error deleting file:", error);
+      console.error("Error details:", error.response?.data || error.message);
       showMessage("Error deleting file: " + (error.response?.data?.error || error.message));
       return false;
     }
