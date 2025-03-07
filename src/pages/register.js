@@ -110,6 +110,14 @@ export default function Register() {
           {/* ✅ Formulário */}
           <form onSubmit={handleRegister} className="w-full">
             <Input
+                label={messages.register?.username_label}
+                type="username"
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
+                ref={usernameInputRef}
+            />
+            <Input
               label={messages.register?.email_label}
               type="email"
               name="email"
