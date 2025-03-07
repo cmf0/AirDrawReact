@@ -77,7 +77,7 @@ export default function Auth() {
       });
 
       toast.success(messages.auth?.login_success);
-      setTimeout(() => router.push("/welcome"), 1000);
+      setTimeout(() => router.push("/fileUp"), 1000);
     } catch (error) {
       let errorMessage = messages.auth?.login_error;
       if (error.response) {
