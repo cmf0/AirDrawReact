@@ -55,25 +55,48 @@ export function GalleryProvider({ children }) {
         }
       });
       
-      console.log("API Response:", JSON.stringify(response.data, null, 2));
+      // Log the raw response for debugging
+      console.log("Raw API Response:", response);
+      console.log("API Response Data:", JSON.stringify(response.data, null, 2));
       
       // Check the structure of the response
-      if (response.data.success && Array.isArray(response.data.images)) {
-        console.log(`Found ${response.data.images.length} images in response`);
+      if (response.data && response.data.success === true && Array.isArray(response.data.images)) {
+        const images = response.data.images;
+        console.log(`Found ${images.length} images in response`);
         
-        // Map the response to the expected format with validation
-        const processedImages = response.data.images
-          .filter(img => img && img.ipfsHash) // Filter out any items with undefined ipfsHash
+        if (images.length === 0) {
+          console.log("No images found in the response");
+          setFiles([]);
+          return;
+        }
+        
+        // Log the first image to see its structure
+        console.log("First image in response:", images[0]);
+        
+        // Process the images from the response
+        const processedImages = images
+          .filter(img => img && typeof img === 'object') // Ensure we have valid objects
           .map(img => {
-            console.log("Processing image:", img);
+            // Ensure we have the correct property names
+            if (!img.ipfsHash) {
+              console.error("Missing ipfsHash in image:", img);
+              return null;
+            }
+            
             return {
               ipfsHash: img.ipfsHash,
-              createdAt: img.createdAt || new Date().toISOString(),
-              url: `https://gateway.pinata.cloud/ipfs/${img.ipfsHash}`
+              createdAt: img.createdAt || new Date().toISOString()
             };
-          });
+          })
+          .filter(Boolean); // Remove any null entries
         
         console.log("Processed images:", processedImages);
+        
+        if (processedImages.length === 0) {
+          console.error("No valid images found after processing");
+          setFiles([]);
+          return;
+        }
         
         // Filter out any files that were deleted in this session
         const filteredFiles = processedImages.filter(

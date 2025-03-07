@@ -1,10 +1,17 @@
 import { toast } from "react-toastify";
 import { useGallery } from "../context/GalleryContext";
 import axios from "axios";
+import { useState, useEffect } from "react";
 
 export default function ImageDisplay() {
   const { files, setFiles, loading, triggerRefresh } = useGallery();
   const API_URL = process.env.NEXT_PUBLIC_APIS_URL_REMOTE;
+  const [imageErrors, setImageErrors] = useState({});
+
+  // Debug: Log the files data structure
+  useEffect(() => {
+    console.log("Files in ImageDisplay:", files);
+  }, [files]);
 
   const deleteFile = async (hash) => {
     const confirmDelete = window.confirm("Tem a certeza que deseja apagar este ficheiro?");
@@ -15,7 +22,7 @@ export default function ImageDisplay() {
       await axios.delete(`${API_URL}/api/pinata?hash=${hash}`);
       
       // Update local state immediately
-      setFiles(prevFiles => prevFiles.filter(file => file.ipfs_pin_hash !== hash));
+      setFiles(prevFiles => prevFiles.filter(file => file.ipfsHash !== hash));
       
       toast.success("Ficheiro apagado com sucesso !");
       
@@ -24,6 +31,36 @@ export default function ImageDisplay() {
       console.error("Erro ao apagar o ficheiro:", error.response?.data || error.message);
       toast.error(error.response?.data?.error || "Erro ao apagar o ficheiro na Blockchain");
     }
+  };
+
+  // Handle image error by trying alternative gateways
+  const handleImageError = (hash, index) => {
+    console.error(`Error loading image ${hash} from gateway ${index}`);
+    
+    // Update the error state to try the next gateway
+    setImageErrors(prev => ({
+      ...prev,
+      [hash]: (prev[hash] || 0) + 1
+    }));
+  };
+
+  // Get the appropriate gateway URL based on error count
+  const getImageUrl = (hash) => {
+    const errorCount = imageErrors[hash] || 0;
+    const gateways = [
+      `https://ipfs.io/ipfs/${hash}`,
+      `https://cloudflare-ipfs.com/ipfs/${hash}`,
+      `https://gateway.pinata.cloud/ipfs/${hash}`,
+      `https://ipfs.infura.io/ipfs/${hash}`,
+      `https://dweb.link/ipfs/${hash}`
+    ];
+    
+    // If we've tried all gateways, return a placeholder
+    if (errorCount >= gateways.length) {
+      return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHg9IjUwIiB5PSI1MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEyIiBmaWxsPSIjYWFhIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBhbGlnbm1lbnQtYmFzZWxpbmU9Im1pZGRsZSI+SW1hZ2UgTm90IEF2YWlsYWJsZTwvdGV4dD48L3N2Zz4=';
+    }
+    
+    return gateways[errorCount];
   };
 
   if (loading) {
@@ -47,38 +84,54 @@ export default function ImageDisplay() {
           marginTop: "20px",
         }}
       >
-        {files.length > 0 ? (
-          files.map((file) => (
-            <div
-              key={file.ipfs_pin_hash}
-              style={{
-                border: "1px solid #ccc",
-                borderRadius: "5px",
-                overflow: "hidden",
-                textAlign: "center",
-              }}
-            >
-              <img
-                src={`https://gateway.pinata.cloud/ipfs/${file.ipfs_pin_hash}`}
-                alt={file.metadata?.name || "Imagem"}
-                style={{ width: "100%", height: "150px", objectFit: "cover" }}
-              />
-              <button
-                onClick={() => deleteFile(file.ipfs_pin_hash)}
+        {files && files.length > 0 ? (
+          files.map((file, index) => {
+            // Debug: Log each file object
+            console.log(`File ${index}:`, file);
+            
+            // Check if ipfsHash exists
+            if (!file || !file.ipfsHash) {
+              console.error(`File ${index} has no ipfsHash:`, file);
+              return null;
+            }
+            
+            return (
+              <div
+                key={file.ipfsHash || index}
                 style={{
-                  marginTop: "10px",
-                  padding: "5px 10px",
-                  border: "none",
-                  background: "#ff4d4d",
-                  color: "#fff",
-                  cursor: "pointer",
-                  borderRadius: "3px",
+                  border: "1px solid #ccc",
+                  borderRadius: "5px",
+                  overflow: "hidden",
+                  textAlign: "center",
                 }}
               >
-                Apagar
-              </button>
-            </div>
-          ))
+                <img
+                  src={getImageUrl(file.ipfsHash)}
+                  alt={`Image ${file.ipfsHash}`}
+                  style={{ width: "100%", height: "150px", objectFit: "cover" }}
+                  onError={() => handleImageError(file.ipfsHash, imageErrors[file.ipfsHash] || 0)}
+                />
+                <div style={{ padding: "5px", fontSize: "12px", color: "#666" }}>
+                  {file.createdAt ? new Date(file.createdAt).toLocaleDateString() : 'No date'}
+                </div>
+                <button
+                  onClick={() => deleteFile(file.ipfsHash)}
+                  style={{
+                    marginTop: "5px",
+                    marginBottom: "10px",
+                    padding: "5px 10px",
+                    border: "none",
+                    background: "#ff4d4d",
+                    color: "#fff",
+                    cursor: "pointer",
+                    borderRadius: "3px",
+                  }}
+                >
+                  Apagar
+                </button>
+              </div>
+            );
+          })
         ) : (
           <p>Não há ficheiros disponíveis na Blockchain IPFS.</p>
         )}
