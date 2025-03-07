@@ -13,15 +13,21 @@ const API_URL = process.env.NEXT_PUBLIC_APIS_URL_REMOTE;
 
 export default function Register() {
   const messages = useMessages(); // Hook para mensagens traduzidas
-  const [formData, setFormData] = useState({ email: "", password: "", confirmPassword: "" }); // Estado do formulário
+  const [formData, setFormData] = useState({ 
+    username: "",
+    email: "", 
+    password: "", 
+    confirmPassword: "" 
+  }); // Estado do formulário
   const router = useRouter(); // Instância do router para navegação
   const emailInputRef = useRef(null); // Referência para focar no input ao carregar
+  const usernameInputRef = useRef(null); // Referência para o input de username
   const [isLoading, setIsLoading] = useState(true); // Estado para loading inicial
 
   // ✅ Focar no input ao carregar a página e simular um carregamento inicial
   useEffect(() => {
-    if (emailInputRef.current) {
-      emailInputRef.current.focus();
+    if (usernameInputRef.current) {
+      usernameInputRef.current.focus();
     }
 
     setTimeout(() => {
@@ -44,7 +50,7 @@ export default function Register() {
     e.preventDefault();
 
     // ✅ Verificar se os campos foram preenchidos corretamente
-    if (!formData.email || !formData.password || !formData.confirmPassword) {
+    if (!formData.username || !formData.email || !formData.password || !formData.confirmPassword) {
       toast.error(messages.register?.fields_required);
       return;
     }
@@ -65,7 +71,11 @@ export default function Register() {
       // 🔹 Envia os dados para a API de registo
       const { data } = await axios.post(
         `${API_URL}/api/register`,
-        { username: formData.email, password: formData.password },
+        { 
+          username: formData.username,
+          email: formData.email, 
+          password: formData.password 
+        },
         { headers: { "Content-Type": "application/json" } }
       );
 
@@ -111,7 +121,7 @@ export default function Register() {
           <form onSubmit={handleRegister} className="w-full">
             <Input
                 label={messages.register?.username_label}
-                type="username"
+                type="text"
                 name="username"
                 value={formData.username}
                 onChange={handleChange}
