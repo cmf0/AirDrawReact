@@ -13,7 +13,14 @@ export default function Home() {
           <img src="/logo.png" alt="AirGallery" style={{ width: "100px", height: "100px" }} />
         </div>
         <h1 style={{ textAlign: "center", marginBottom: "20px" }}>AirGallery</h1>
-        
+
+        {/* Componente de Upload de Ficheiros */}
+        <FileUpload />
+        <hr />
+
+        {/* Galeria de Imagens */}
+        <ImageDisplay />
+
         {/* Secção de Explicação */}
         <section
           style={{
@@ -28,7 +35,7 @@ export default function Home() {
           }}
         >
 
-          
+          <h2 style={{ marginTop: 0, color: "#333", fontSize: "16px" }}>About</h2>
           {showMore && (            
             <div>
               <h2 style={{ marginTop: 0, color: "#333", fontSize: "16px" }}>O que é a IPFS e a Blockchain?</h2>
@@ -97,16 +104,10 @@ export default function Home() {
               fontSize: "14px",
             }}
           >
-            {showMore ? "Ler menos" : "Ler mais"}
+            {showMore ? "Got it!" : "Read More"}
           </button>
         </section>
 
-        {/* Componente de Upload de Ficheiros */}
-        <FileUpload />
-        <hr />
-
-        {/* Galeria de Imagens */}
-        <ImageDisplay />
       </div>
     </GalleryProvider>
   );
