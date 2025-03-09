@@ -20,9 +20,25 @@ export default function Home() {
   return (
     <GalleryProvider>
       <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
-        <div style={{ display: "flex",flexDirection: "row", justifyContent: "center", alignItems: "center", marginBottom: "20px" }}>
-          <img src="/logo.png" alt="AirGallery" style={{ width: "100px", height: "100px" }} />
-          <h1 style={{ textAlign: "center", marginBottom: "20px" }}>AirGallery</h1>
+        <div style={{ 
+          display: "flex", 
+          flexDirection: "row", 
+          justifyContent: "flex-start", 
+          alignItems: "center", 
+          marginBottom: "30px",
+          paddingLeft: "20px"
+        }}>
+          <img src="/logo.png" alt="AirGallery" style={{ 
+            width: "80px", 
+            height: "80px",
+            marginRight: "20px"
+          }} />
+          <h1 style={{ 
+            fontSize: "2.5rem",
+            color: "#333",
+            margin: 0,
+            fontWeight: "600"
+          }}>AirGallery</h1>
         </div>
         
 
