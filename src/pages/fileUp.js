@@ -20,10 +20,11 @@ export default function Home() {
   return (
     <GalleryProvider>
       <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", marginBottom: "20px" }}>
+        <div style={{ display: "flex",flexDirection: "row", justifyContent: "center", alignItems: "center", marginBottom: "20px" }}>
           <img src="/logo.png" alt="AirGallery" style={{ width: "100px", height: "100px" }} />
+          <h1 style={{ textAlign: "center", marginBottom: "20px" }}>AirGallery</h1>
         </div>
-        <h1 style={{ textAlign: "center", marginBottom: "20px" }}>AirGallery</h1>
+        
 
         {/* Componente de Upload de Ficheiros */}
         <FileUpload />
