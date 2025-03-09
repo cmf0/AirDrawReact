@@ -99,7 +99,8 @@ export default function FileUpload() {
         }}>
           <div style={{
             position: "relative",
-            flex: "1"
+            flex: "1",
+            minWidth: 0 // Add this to prevent flex item from overflowing
           }}>
             <div style={{
               display: "flex",
@@ -109,14 +110,16 @@ export default function FileUpload() {
               backgroundColor: "white",
               padding: "8px",
               gap: "10px",
-              flex: "1"
+              flex: "1",
+              minWidth: 0 // Add this to prevent flex item from overflowing
             }}>
               <input 
                 type="file" 
                 ref={fileInputRef}
                 onChange={handleFileChange}
                 style={{
-                  width: "120px", // Width of the "Choose File" button
+                  width: "140px", // Increased width for better visibility
+                  flexShrink: 0 // Prevent input from shrinking
                 }}
               />
               {selectedFile && (
@@ -126,12 +129,16 @@ export default function FileUpload() {
                   display: "flex",
                   alignItems: "center",
                   gap: "5px",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap"
+                  minWidth: 0, // Add this to prevent flex item from overflowing
+                  overflow: "hidden"
                 }}>
-                  <span>📎</span>
-                  <span style={{ overflow: "hidden", textOverflow: "ellipsis" }}>{selectedFile.name}</span>
+                  <span style={{ flexShrink: 0 }}>📎</span>
+                  <span style={{ 
+                    overflow: "hidden", 
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                    minWidth: 0 // Add this to prevent text from overflowing
+                  }}>{selectedFile.name}</span>
                 </div>
               )}
             </div>
@@ -151,7 +158,9 @@ export default function FileUpload() {
               display: "flex",
               alignItems: "center",
               gap: "8px",
-              whiteSpace: "nowrap"
+              whiteSpace: "nowrap",
+              flexShrink: 0, // Prevent button from shrinking
+              marginLeft: "10px" // Ensure consistent spacing
             }}
           >
             {loading ? (
