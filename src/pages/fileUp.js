@@ -27,24 +27,25 @@ export default function Home() {
             boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
           }}
         >
-          <h2 style={{ marginTop: 0, color: "#333", fontSize: "16px" }}>O que é a IPFS e a Blockchain?</h2>
-          <p style={{ color: "#555" }}>
-            A <strong>IPFS</strong> (InterPlanetary File System) permite armazenar ficheiros de forma descentralizada na Blockchain, distribuindo
-            os dados por uma rede de computadores (nós), em vez de depender de um único servidor centralizado como
-            em servidores da Google ou da Amazon.
-          </p>
-          <h2 style={{ marginTop: "20px", color: "#333", fontSize: "16px" }}>Como funciona?</h2>
-          <p style={{ color: "#555" }}>
-            A <strong>blockchain</strong> regista o identificador único dos ficheiros, chamado
-            <strong> hash (CID)</strong>, que é devidamente encriptado, garantindo a integridade e referência ao ficheiro original.
-          </p>
-          <p style={{ color: "#555" }}>
-            Quando um ficheiro é <strong>"removido" o vinculo direto entre o nó (referência do Hash/CID - Content identifier) e o ficheiro é eliminado (unpinned)</strong>, ele deixa de estar armazenado no nó responsável,
-            mas o hash continua a existir na blockchain. Esse processo permite a remoção eficiente do ficheiro sem comprometer a descentralização.
-          </p>
+
           
-          {showMore && (
+          {showMore && (            
             <div>
+              <h2 style={{ marginTop: 0, color: "#333", fontSize: "16px" }}>O que é a IPFS e a Blockchain?</h2>
+              <p style={{ color: "#555" }}>
+                A <strong>IPFS</strong> (InterPlanetary File System) permite armazenar ficheiros de forma descentralizada na Blockchain, distribuindo
+                os dados por uma rede de computadores (nós), em vez de depender de um único servidor centralizado como
+                em servidores da Google ou da Amazon.
+              </p>
+              <h2 style={{ marginTop: "20px", color: "#333", fontSize: "16px" }}>Como funciona?</h2>
+              <p style={{ color: "#555" }}>
+                A <strong>blockchain</strong> regista o identificador único dos ficheiros, chamado
+                <strong> hash (CID)</strong>, que é devidamente encriptado, garantindo a integridade e referência ao ficheiro original.
+              </p>
+              <p style={{ color: "#555" }}>
+                Quando um ficheiro é <strong>"removido" o vinculo direto entre o nó (referência do Hash/CID - Content identifier) e o ficheiro é eliminado (unpinned)</strong>, ele deixa de estar armazenado no nó responsável,
+                mas o hash continua a existir na blockchain. Esse processo permite a remoção eficiente do ficheiro sem comprometer a descentralização.
+              </p>
               <h3 style={{ marginTop: "20px", color: "#333", fontSize: "16px" }}>Vantagens de armazenar na Blockchain:</h3>
               <ul style={{ marginLeft: "20px", color: "#555" }}>
                 <li>
