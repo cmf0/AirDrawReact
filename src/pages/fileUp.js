@@ -20,6 +20,7 @@ export default function Home() {
 
         {/* Galeria de Imagens */}
         <ImageDisplay />
+        <hr />
 
         {/* Secção de Explicação */}
         <section
@@ -32,10 +33,11 @@ export default function Home() {
             fontSize: "14px",
             lineHeight: "1.4em",
             boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+            width: showMore ? "100%" : "200px",
+            margin: showMore ? "20px 0" : "20px auto",
+            transition: "width 0.3s ease-in-out"
           }}
         >
-
-          <h2 style={{ marginTop: 0, color: "#333", fontSize: "16px" }}>About</h2>
           {showMore && (            
             <div>
               <h2 style={{ marginTop: 0, color: "#333", fontSize: "16px" }}>O que é a IPFS e a Blockchain?</h2>
