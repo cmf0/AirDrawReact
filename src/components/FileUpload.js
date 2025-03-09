@@ -126,19 +126,12 @@ export default function FileUpload() {
                 <div style={{
                   flex: "1",
                   color: "#666",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "5px",
-                  minWidth: 0, // Add this to prevent flex item from overflowing
-                  overflow: "hidden"
+                  overflow: "hidden",
+                  whiteSpace: "nowrap",
+                  textOverflow: "ellipsis",
+                  minWidth: 0
                 }}>
-                  <span style={{ flexShrink: 0 }}>📎</span>
-                  <span style={{ 
-                    overflow: "hidden", 
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                    minWidth: 0 // Add this to prevent text from overflowing
-                  }}>{selectedFile.name}</span>
+                  {selectedFile.name}
                 </div>
               )}
             </div>
@@ -170,7 +163,6 @@ export default function FileUpload() {
               </>
             ) : (
               <>
-                <span>📤</span>
                 Upload para Blockchain
               </>
             )}
