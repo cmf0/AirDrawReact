@@ -66,12 +66,67 @@ export default function FileUpload() {
   };
 
   return (
-    <div>
-      <h3>1. Upload de Ficheiros "Localhost" para Blockchain (IPFS)</h3>
-      <input type="file" ref={fileInputRef} />
-      <button onClick={handleUpload} disabled={loading}>
-        {loading ? "A carregar..." : "Upload do ficheiro na Blockchain (IPFS)"}
-      </button>
+    <div style={{
+      padding: "20px",
+      backgroundColor: "#f8f9fa",
+      borderRadius: "10px",
+      boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+      marginBottom: "20px"
+    }}>
+      <h3 style={{
+        fontSize: "1.2rem",
+        color: "#333",
+        marginBottom: "15px",
+        fontWeight: "600"
+      }}>Upload de Ficheiros para Blockchain (IPFS)</h3>
+      
+      <div style={{
+        display: "flex",
+        gap: "10px",
+        alignItems: "center"
+      }}>
+        <input 
+          type="file" 
+          ref={fileInputRef}
+          style={{
+            flex: "1",
+            padding: "8px",
+            border: "2px dashed #ccc",
+            borderRadius: "5px",
+            backgroundColor: "white",
+            cursor: "pointer"
+          }}
+        />
+        <button 
+          onClick={handleUpload} 
+          disabled={loading}
+          style={{
+            backgroundColor: loading ? "#ccc" : "#007bff",
+            color: "white",
+            padding: "10px 20px",
+            border: "none",
+            borderRadius: "5px",
+            cursor: loading ? "not-allowed" : "pointer",
+            fontWeight: "500",
+            transition: "background-color 0.3s ease",
+            display: "flex",
+            alignItems: "center",
+            gap: "8px"
+          }}
+        >
+          {loading ? (
+            <>
+              <span style={{ display: "inline-block", animation: "spin 1s linear infinite" }}>⌛</span>
+              A carregar...
+            </>
+          ) : (
+            <>
+              <span>📤</span>
+              Upload para Blockchain
+            </>
+          )}
+        </button>
+      </div>
     </div>
   );
 }

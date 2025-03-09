@@ -20,6 +20,7 @@ export default function Home() {
 
         {/* Galeria de Imagens */}
         <ImageDisplay />
+        <br />
         <hr />
 
         {/* Secção de Explicação */}
