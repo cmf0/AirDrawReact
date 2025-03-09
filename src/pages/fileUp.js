@@ -35,7 +35,6 @@ export default function Home() {
           }} />
           <h1 style={{ 
             fontSize: "2.5rem",
-            color: "#333",
             margin: 0,
             fontWeight: "600"
           }}>AirGallery</h1>
