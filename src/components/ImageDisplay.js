@@ -67,7 +67,7 @@ export default function ImageDisplay() {
 
   return (
     <div>
-      <h3>2. Ficheiro Armazenados na Blockchain (IPFS)</h3>
+      <h3>Ficheiro Armazenados na Blockchain</h3>
       <div
         style={{
           display: "grid",

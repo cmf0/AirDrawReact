@@ -111,7 +111,7 @@ export default function Home() {
                 fontSize: "14px",
               }}
             >
-              {showMore ? "Got it!" : "How it works?"}
+              {showMore ? "Entendido!" : "Como funciona?"}
             </button>
           </div>
         </section>

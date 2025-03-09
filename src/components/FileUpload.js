@@ -6,8 +6,14 @@ import axiosInstance from "../lib/axiosInstance"; // Import the axios instance w
 export default function FileUpload() {
   // Define a URL da API com base no ambiente
   const [loading, setLoading] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
   const fileInputRef = useRef(null);
   const { triggerRefresh } = useGallery();
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+  };
 
   const handleUpload = async () => {
     const file = fileInputRef.current?.files[0];
@@ -61,6 +67,7 @@ export default function FileUpload() {
       toast.error(error.response?.data?.error || "Erro ao carregar o ficheiro na Blockchain");
     } finally {
       setLoading(false);
+      setSelectedFile(null);
       fileInputRef.current.value = ""; // Resetar o campo de input
     }
   };
@@ -78,54 +85,80 @@ export default function FileUpload() {
         color: "#333",
         marginBottom: "15px",
         fontWeight: "600"
-      }}>Upload de Ficheiros para Blockchain (IPFS)</h3>
+      }}>Upload de Ficheiros para Blockchain</h3>
       
       <div style={{
         display: "flex",
-        gap: "10px",
-        alignItems: "center"
+        flexDirection: "column",
+        gap: "10px"
       }}>
-        <input 
-          type="file" 
-          ref={fileInputRef}
-          style={{
-            flex: "1",
-            padding: "8px",
-            border: "2px dashed #ccc",
-            borderRadius: "5px",
-            backgroundColor: "white",
-            cursor: "pointer"
-          }}
-        />
-        <button 
-          onClick={handleUpload} 
-          disabled={loading}
-          style={{
-            backgroundColor: loading ? "#ccc" : "#007bff",
-            color: "white",
-            padding: "10px 20px",
-            border: "none",
-            borderRadius: "5px",
-            cursor: loading ? "not-allowed" : "pointer",
-            fontWeight: "500",
-            transition: "background-color 0.3s ease",
+        <div style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "10px"
+        }}>
+          <div style={{
+            position: "relative",
+            flex: "1"
+          }}>
+            <input 
+              type="file" 
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              style={{
+                flex: "1",
+                padding: "8px",
+                border: "2px dashed #ccc",
+                borderRadius: "5px",
+                backgroundColor: "white",
+                cursor: "pointer",
+                width: "100%"
+              }}
+            />
+          </div>
+          <button 
+            onClick={handleUpload} 
+            disabled={loading}
+            style={{
+              backgroundColor: loading ? "#ccc" : "#007bff",
+              color: "white",
+              padding: "10px 20px",
+              border: "none",
+              borderRadius: "5px",
+              cursor: loading ? "not-allowed" : "pointer",
+              fontWeight: "500",
+              transition: "background-color 0.3s ease",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              whiteSpace: "nowrap"
+            }}
+          >
+            {loading ? (
+              <>
+                <span style={{ display: "inline-block", animation: "spin 1s linear infinite" }}>⌛</span>
+                A carregar...
+              </>
+            ) : (
+              <>
+                <span>📤</span>
+                Upload para Blockchain
+              </>
+            )}
+          </button>
+        </div>
+        {selectedFile && (
+          <div style={{
+            fontSize: "0.9rem",
+            color: "#666",
             display: "flex",
             alignItems: "center",
-            gap: "8px"
-          }}
-        >
-          {loading ? (
-            <>
-              <span style={{ display: "inline-block", animation: "spin 1s linear infinite" }}>⌛</span>
-              A carregar...
-            </>
-          ) : (
-            <>
-              <span>📤</span>
-              Upload para Blockchain
-            </>
-          )}
-        </button>
+            gap: "5px"
+          }}>
+            <span>📎</span>
+            <span>Ficheiro selecionado: {selectedFile.name}</span>
+          </div>
+        )}
       </div>
     </div>
   );
