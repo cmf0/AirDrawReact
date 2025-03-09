@@ -113,42 +113,15 @@ export default function FileUpload() {
               flex: "1",
               minWidth: 0
             }}>
-              <div style={{
-                position: "relative",
-                width: "140px",
-                flexShrink: 0
-              }}>
-                <input 
-                  type="file" 
-                  ref={fileInputRef}
-                  onChange={handleFileChange}
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    opacity: 0,
-                    width: "100%",
-                    height: "100%",
-                    cursor: "pointer"
-                  }}
-                />
-                <div style={{
-                  backgroundColor: "#007bff",
-                  color: "white",
-                  padding: "10px 20px",
-                  border: "none",
-                  borderRadius: "5px",
-                  cursor: "pointer",
-                  fontWeight: "500",
-                  fontSize: "14px",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  whiteSpace: "nowrap"
-                }}>
-                  Escolher Ficheiro
-                </div>
-              </div>
+              <input 
+                type="file" 
+                ref={fileInputRef}
+                onChange={handleFileChange}
+                style={{
+                  width: "140px",
+                  flexShrink: 0
+                }}
+              />
               {selectedFile && (
                 <div style={{
                   flex: "1",
