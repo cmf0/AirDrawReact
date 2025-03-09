@@ -141,7 +141,9 @@ export default function FileUpload() {
                   cursor: "pointer",
                   fontWeight: "500",
                   fontSize: "14px",
-                  textAlign: "center",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                   whiteSpace: "nowrap"
                 }}>
                   Escolher Ficheiro
