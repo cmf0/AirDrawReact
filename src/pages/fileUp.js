@@ -1,10 +1,21 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { GalleryProvider } from "../context/GalleryContext";
 import FileUpload from "../components/FileUpload";
 import ImageDisplay from "../components/ImageDisplay";
 
 export default function Home() {
   const [showMore, setShowMore] = useState(false);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    if (showMore && sectionRef.current) {
+      const sectionBottom = sectionRef.current.getBoundingClientRect().bottom + window.pageYOffset;
+      window.scrollTo({
+        top: sectionBottom,
+        behavior: 'smooth'
+      });
+    }
+  }, [showMore]);
 
   return (
     <GalleryProvider>
@@ -25,6 +36,7 @@ export default function Home() {
 
         {/* Secção de Explicação */}
         <section
+          ref={sectionRef}
           style={{
             background: "#f9f9f9",
             border: "1px solid #ddd",

@@ -101,20 +101,40 @@ export default function FileUpload() {
             position: "relative",
             flex: "1"
           }}>
-            <input 
-              type="file" 
-              ref={fileInputRef}
-              onChange={handleFileChange}
-              style={{
-                flex: "1",
-                padding: "8px",
-                border: "2px dashed #ccc",
-                borderRadius: "5px",
-                backgroundColor: "white",
-                cursor: "pointer",
-                width: "100%"
-              }}
-            />
+            <div style={{
+              display: "flex",
+              alignItems: "center",
+              border: "2px dashed #ccc",
+              borderRadius: "5px",
+              backgroundColor: "white",
+              padding: "8px",
+              gap: "10px",
+              flex: "1"
+            }}>
+              <input 
+                type="file" 
+                ref={fileInputRef}
+                onChange={handleFileChange}
+                style={{
+                  width: "120px", // Width of the "Choose File" button
+                }}
+              />
+              {selectedFile && (
+                <div style={{
+                  flex: "1",
+                  color: "#666",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "5px",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap"
+                }}>
+                  <span>📎</span>
+                  <span style={{ overflow: "hidden", textOverflow: "ellipsis" }}>{selectedFile.name}</span>
+                </div>
+              )}
+            </div>
           </div>
           <button 
             onClick={handleUpload} 
@@ -147,18 +167,6 @@ export default function FileUpload() {
             )}
           </button>
         </div>
-        {selectedFile && (
-          <div style={{
-            fontSize: "0.9rem",
-            color: "#666",
-            display: "flex",
-            alignItems: "center",
-            gap: "5px"
-          }}>
-            <span>📎</span>
-            <span>Ficheiro selecionado: {selectedFile.name}</span>
-          </div>
-        )}
       </div>
     </div>
   );
