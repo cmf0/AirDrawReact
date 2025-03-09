@@ -93,21 +93,26 @@ export default function Home() {
               </p>
             </div>
           )}
-          <button
-            onClick={() => setShowMore(!showMore)}
-            style={{
-              marginTop: "10px",
-              background: "#007BFF",
-              color: "#fff",
-              border: "none",
-              padding: "5px 10px",
-              borderRadius: "5px",
-              cursor: "pointer",
-              fontSize: "14px",
-            }}
-          >
-            {showMore ? "Got it!" : "Read More"}
-          </button>
+          <div style={{ 
+            display: "flex", 
+            justifyContent: showMore ? "flex-start" : "center"
+          }}>
+            <button
+              onClick={() => setShowMore(!showMore)}
+              style={{
+                marginTop: "10px",
+                background: "#007BFF",
+                color: "#fff",
+                border: "none",
+                padding: "5px 10px",
+                borderRadius: "5px",
+                cursor: "pointer",
+                fontSize: "14px",
+              }}
+            >
+              {showMore ? "Got it!" : "How it works?"}
+            </button>
+          </div>
         </section>
 
       </div>
