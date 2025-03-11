@@ -163,7 +163,7 @@ export default function Auth() {
 
         {/* ✅ Indicador do estado da base de dados movido para o canto **superior direito** */}
         {!isLoading && (
-          <div className="absolute top-5 right-5 flex justify-between items-center space-x-2">
+          <div className="absolute top-5 right-5 flex flex-row justify-between items-center space-x-2">
             <Logo />
             {serverError === true ? (
               <>
