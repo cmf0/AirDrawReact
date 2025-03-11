@@ -30,38 +30,9 @@ export default function Home() {
       // Clear the auth token from localStorage
       localStorage.removeItem('auth_token');
       
-      // Try to use js-cookie if it's available
-      if (typeof Cookies !== 'undefined') {
-        // Clear with js-cookie (multiple variations)
-        Cookies.remove('token');
-        Cookies.remove('token', { path: '/' });
-        Cookies.remove('token', { path: '/', domain: '.nstech.pt' });
-        Cookies.remove('token', { path: '/', domain: 'nstech.pt' });
-        // Try with the current domain
-        const currentDomain = window.location.hostname;
-        Cookies.remove('token', { path: '/', domain: currentDomain });
-        Cookies.remove('token', { path: '/', domain: `.${currentDomain}` });
-      }
-      
-      // Also try with document.cookie (multiple variations)
-      // Basic cookie clearing
-      document.cookie = "token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT;";
-      
-      // With domain variations
-      document.cookie = "token=; Path=/; Domain=nstech.pt; Expires=Thu, 01 Jan 1970 00:00:00 GMT;";
-      document.cookie = "token=; Path=/; Domain=.nstech.pt; Expires=Thu, 01 Jan 1970 00:00:00 GMT;";
-      
-      // With security attributes
-      document.cookie = "token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Secure;";
-      document.cookie = "token=; Path=/; Domain=.nstech.pt; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Secure; SameSite=None;";
-      
-      // Try with the current domain
-      const currentDomain = window.location.hostname;
-      document.cookie = `token=; Path=/; Domain=${currentDomain}; Expires=Thu, 01 Jan 1970 00:00:00 GMT;`;
-      document.cookie = `token=; Path=/; Domain=.${currentDomain}; Expires=Thu, 01 Jan 1970 00:00:00 GMT;`;
-      
-      // Try without domain specification (for cookies set without domain)
-      document.cookie = "token=; Path=/; Max-Age=-99999999;";
+      // Clear the token cookie using document.cookie
+      // Try multiple approaches to ensure the cookie is cleared
+      document.cookie.delete("token");
       
       // Show success message
       alert("Logout efetuado com sucesso!");
