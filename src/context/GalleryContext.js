@@ -2,7 +2,7 @@ import axios from "axios";
 import { createContext, useState, useContext, useEffect, useRef } from "react";
 import axiosInstance from "../lib/axiosInstance"; // Import the axios instance with credentials
 
-const GalleryContext = createContext();
+export const GalleryContext = createContext();
 
 export function GalleryProvider({ children }) {
   const [files, setFiles] = useState([]);
