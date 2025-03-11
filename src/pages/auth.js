@@ -105,31 +105,7 @@ export default function Auth() {
         <meta name="description" content="Login para acesso a serviços." />
       </Head>
 
-      {/* ✅ Header with Logo and DB Status */}
-      <div className="fixed top-0 left-0 right-0 w-full px-6 py-4 flex justify-between items-center">
-        <Logo />
-        {!isLoading && (
-          <div className="flex items-center space-x-2">
-            {serverError === true ? (
-              <>
-                <FiAlertTriangle className="text-red-500 text-xl animate-bounce" />
-                <p className="text-sm text-gray-300">{messages.server?.server_offline}</p>
-              </>
-            ) : dbStatus === "online" ? (
-              <>
-                <p className="text-sm text-gray-300">{messages.database?.db_online}</p>
-                <span className="w-3 h-3 rounded-full bg-green-500 animate-pulse" />
-              </>
-            ) : (
-              <>
-                <p className="text-sm text-gray-300">{messages.database?.db_offline}</p>
-                <span className="w-3 h-3 rounded-full bg-red-500 animate-pulse" />
-              </>
-            )}
-          </div>
-        )}
-      </div>
-
+      {/* ✅ Estrutura da Página */}
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-black text-white relative">
       
         {/* ✅ Animação de Carregamento antes de renderizar o conteúdo */}
@@ -142,7 +118,7 @@ export default function Auth() {
           
           <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md border border-gray-700 flex flex-col items-center">
             <div className="flex items-center space-x-3 mb-4">
-              <Image src="/logo.png" alt="AirDraw Logo" width={40} height={40} />
+              {/* <Image src="/logo.png" alt="AirDraw Logo" width={40} height={40} /> */}              
               <h2 className="text-2xl font-semibold">{messages.auth?.login_title}</h2>
             </div>
 
@@ -183,6 +159,34 @@ export default function Auth() {
               </a>
             </p>
           </div>
+        )}
+
+        {/* ✅ Indicador do estado da base de dados movido para o canto **superior direito** */}
+        {!isLoading && (
+          <>
+            <div className="absolute top-5 left-5">
+              <Logo />
+            </div>
+            <div className="absolute top-5 right-5 flex items-center gap-4">
+              {serverError === true ? (
+                <>
+                  <FiAlertTriangle className="text-red-500 text-xl animate-bounce" />
+                  <p className="text-sm text-gray-300">{messages.server?.server_offline}</p>
+                </>
+              ) : dbStatus === "online" ? (
+                <>
+                  <span className="w-3 h-3 rounded-full bg-green-500 animate-pulse" />
+                  <p className="text-sm text-gray-300">{messages.database?.db_online}</p>
+                </>
+              ) : (
+                <>
+                  <span className="w-3 h-3 rounded-full bg-red-500 animate-pulse" />
+                  <p className="text-sm text-gray-300">{messages.database?.db_offline}</p>
+                </>
+              )}
+              {/*<PwaInstallButton />*/}
+            </div>
+          </>
         )}
 
         {/* ✅ Notificações Toastify */}
