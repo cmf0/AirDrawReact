@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css"; // Estilos do Toastify
 import useMessages from "../hooks/useMessages"; // Hook para mensagens dinâmicas
 import Input from "../components/ui/Input"; // Componente Input
 import Button from "../components/ui/Button"; // Componente Button
+import Logo from "../components/ui/Logo"; // Componente Logo
 import Image from "next/image"; // Componente Image
 import { FiAlertTriangle } from "react-icons/fi"; // Ícone de erro
 import axiosInstance from "../lib/axiosInstance"; // 🚀 Importação do axiosInstance
