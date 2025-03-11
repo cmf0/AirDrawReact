@@ -31,6 +31,7 @@
   },
   "register": {
     "title": "Criar conta",
+    "username_label": "Nome de utilizador",
     "email_label": "E-mail",
     "password_label": "Palavra-passe",
     "confirm_password_label": "Confirmar palavra-passe",
