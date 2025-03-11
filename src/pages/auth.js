@@ -167,16 +167,19 @@ export default function Auth() {
           <div className="absolute top-5 right-5 flex items-center space-x-2">
             {serverError === true ? (
               <>
+                <Logo />
                 <FiAlertTriangle className="text-red-500 text-xl animate-bounce" />
                 <p className="text-sm text-gray-300">{messages.server?.server_offline}</p>
               </>
             ) : dbStatus === "online" ? (
               <>
+                <Logo />
                 <span className="w-3 h-3 rounded-full bg-green-500 animate-pulse" />
                 <p className="text-sm text-gray-300">{messages.database?.db_online}</p>
               </>
             ) : (
               <>
+                <Logo />
                 <span className="w-3 h-3 rounded-full bg-red-500 animate-pulse" />
                 <p className="text-sm text-gray-300">{messages.database?.db_offline}</p>
               </>
