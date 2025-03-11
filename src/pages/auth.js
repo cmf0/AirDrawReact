@@ -106,7 +106,6 @@ export default function Auth() {
       </Head>
 
       {/* ✅ Estrutura da Página */}
-      <Logo />
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-black text-white relative">
       
         {/* ✅ Animação de Carregamento antes de renderizar o conteúdo */}
@@ -165,21 +164,19 @@ export default function Auth() {
         {/* ✅ Indicador do estado da base de dados movido para o canto **superior direito** */}
         {!isLoading && (
           <div className="absolute top-5 right-5 flex items-center space-x-2">
+            <Logo />
             {serverError === true ? (
               <>
-                <Logo />
                 <FiAlertTriangle className="text-red-500 text-xl animate-bounce" />
                 <p className="text-sm text-gray-300">{messages.server?.server_offline}</p>
               </>
             ) : dbStatus === "online" ? (
               <>
-                <Logo />
                 <span className="w-3 h-3 rounded-full bg-green-500 animate-pulse" />
                 <p className="text-sm text-gray-300">{messages.database?.db_online}</p>
               </>
             ) : (
               <>
-                <Logo />
                 <span className="w-3 h-3 rounded-full bg-red-500 animate-pulse" />
                 <p className="text-sm text-gray-300">{messages.database?.db_offline}</p>
               </>
