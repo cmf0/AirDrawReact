@@ -105,7 +105,38 @@ export default function Auth() {
         <meta name="description" content="Login para acesso a serviços." />
       </Head>
 
-      {/* ✅ Estrutura da Página */}
+      {/* ✅ Header with Logo and DB Status */}
+      <div className="container-fluid fixed-top">
+        <div className="row p-3">
+          <div className="col-4">
+            <Logo />
+          </div>
+          <div className="col-4"></div>
+          <div className="col-4 d-flex justify-content-end">
+            {!isLoading && (
+              <div className="d-flex align-items-center gap-2">
+                {serverError === true ? (
+                  <>
+                    <FiAlertTriangle className="text-danger fs-5 animate-bounce" />
+                    <p className="text-secondary mb-0 small">{messages.server?.server_offline}</p>
+                  </>
+                ) : dbStatus === "online" ? (
+                  <>
+                    <p className="text-secondary mb-0 small">{messages.database?.db_online}</p>
+                    <span className="rounded-circle bg-success" style={{ width: '12px', height: '12px', animation: 'pulse 2s infinite' }} />
+                  </>
+                ) : (
+                  <>
+                    <p className="text-secondary mb-0 small">{messages.database?.db_offline}</p>
+                    <span className="rounded-circle bg-danger" style={{ width: '12px', height: '12px', animation: 'pulse 2s infinite' }} />
+                  </>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-black text-white relative">
       
         {/* ✅ Animação de Carregamento antes de renderizar o conteúdo */}
@@ -158,30 +189,6 @@ export default function Auth() {
                 Registe-se
               </a>
             </p>
-          </div>
-        )}
-
-        {/* ✅ Indicador do estado da base de dados movido para o canto **superior direito** */}
-        {!isLoading && (
-          <div className="absolute top-5 right-5 flex flex-row justify-between items-center space-x-2">
-            <Logo />
-            {serverError === true ? (
-              <>
-                <FiAlertTriangle className="text-red-500 text-xl animate-bounce" />
-                <p className="text-sm text-gray-300">{messages.server?.server_offline}</p>
-              </>
-            ) : dbStatus === "online" ? (
-              <>
-                <span className="w-3 h-3 rounded-full bg-green-500 animate-pulse" />
-                <p className="text-sm text-gray-300">{messages.database?.db_online}</p>
-              </>
-            ) : (
-              <>
-                <span className="w-3 h-3 rounded-full bg-red-500 animate-pulse" />
-                <p className="text-sm text-gray-300">{messages.database?.db_offline}</p>
-              </>
-            )}
-            {/*<PwaInstallButton />*/}
           </div>
         )}
 
