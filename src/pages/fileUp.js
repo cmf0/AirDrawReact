@@ -4,7 +4,6 @@ import FileUpload from "../components/FileUpload";
 import ImageDisplay from "../components/ImageDisplay";
 import axiosInstance from "../lib/axiosInstance";
 import Cookies from 'js-cookie';
-import Logo from "../components/ui/Logo";
 
 export default function Home() {
   const [showMore, setShowMore] = useState(false);
@@ -73,34 +72,8 @@ export default function Home() {
   return (
     <GalleryProvider>
       <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
-        {/* Header with Logo and Logout Button */}
-        <div style={{ 
-          display: "flex", 
-          justifyContent: "space-between", 
-          alignItems: "center",
-          marginBottom: "20px"
-        }}>
-          <Logo />
-          <button
-            onClick={handleLogout}
-            style={{
-              background: "#dc3545",
-              color: "#fff",
-              border: "none",
-              padding: "8px 15px",
-              borderRadius: "5px",
-              cursor: "pointer",
-              fontSize: "14px",
-              fontWeight: "bold",
-              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-              transition: "background-color 0.3s ease"
-            }}
-            onMouseOver={(e) => e.currentTarget.style.background = "#c82333"}
-            onMouseOut={(e) => e.currentTarget.style.background = "#dc3545"}
-          >
-            Logout
-          </button>
-        </div>
+        
+        
 
         {/* Componente de Upload de Ficheiros */}
         <FileUpload />
