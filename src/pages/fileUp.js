@@ -5,6 +5,7 @@ import ImageDisplay from "../components/ImageDisplay";
 import Logo from "../components/ui/Logo";
 import axios from "axios";
 import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 export default function Home() {
   const [showMore, setShowMore] = useState(false);
@@ -29,6 +30,16 @@ export default function Home() {
       
       // Clear the auth token from localStorage
       localStorage.removeItem('auth_token');
+      
+      // Clear the token cookie from browser cookies
+      Cookies.remove('token');
+      
+      // Also try to clear the cookie with specific domain and path settings
+      // This is a fallback in case the cookie has specific domain/path settings
+      Cookies.remove('token', { path: '/', domain: '.nstech.pt' });
+      
+      // For cookies that might not be accessible via js-cookie
+      document.cookie = "token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Domain=.nstech.pt; Secure; SameSite=None;";
       
       // Show success message
       alert("Logout efetuado com sucesso!");
