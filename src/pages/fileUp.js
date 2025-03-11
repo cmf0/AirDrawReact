@@ -35,6 +35,28 @@ export default function Home() {
       localStorage.removeItem('auth_token');
       console.log("Cleared auth_token from localStorage");
       
+      // Clear browser cookies using js-cookie
+      console.log("Clearing browser cookies with js-cookie...");
+      Cookies.remove('token'); // Basic removal
+      Cookies.remove('token', { path: '/' }); // With path
+      
+      // Try with specific domain
+      try {
+        Cookies.remove('token', { path: '/', domain: '.nstech.pt' });
+        console.log("Removed cookie with domain .nstech.pt");
+      } catch (e) {
+        console.log("Error removing cookie with domain .nstech.pt:", e);
+      }
+      
+      // Try with current domain
+      try {
+        const currentDomain = window.location.hostname;
+        Cookies.remove('token', { path: '/', domain: currentDomain });
+        console.log(`Removed cookie with domain ${currentDomain}`);
+      } catch (e) {
+        console.log(`Error removing cookie with domain ${window.location.hostname}:`, e);
+      }
+      
       // Show success message
       alert("Logout efetuado com sucesso!");
       
