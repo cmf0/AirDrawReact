@@ -1,13 +1,16 @@
 import { useState, useRef, useEffect } from "react";
-import { GalleryProvider } from "../context/GalleryContext";
+import { GalleryProvider, useGallery } from "../context/GalleryContext";
 import FileUpload from "../components/FileUpload";
 import ImageDisplay from "../components/ImageDisplay";
+import Logo from "../components/ui/Logo";
+import { useRouter } from "next/router";
 import axiosInstance from "../lib/axiosInstance";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 export default function Home() {
   const [showMore, setShowMore] = useState(false);
   const sectionRef = useRef(null);
+  const router = useRouter();
 
   useEffect(() => {
     if (showMore && sectionRef.current) {
@@ -21,48 +24,18 @@ export default function Home() {
 
   const handleLogout = async () => {
     try {
-      console.log("Starting logout process...");
-      
       // Call the logout API endpoint using the configured axios instance
       // The server will handle clearing the HttpOnly cookie
-      const response = await axiosInstance.post("/api/logout");
-      console.log("Logout API response:", response.data);
+      await axiosInstance.post("/api/logout");
       
       // Clear the auth token from localStorage
       localStorage.removeItem('auth_token');
-      console.log("Cleared auth_token from localStorage");
-      
-      // Clear browser cookies using js-cookie
-      console.log("Clearing browser cookies with js-cookie...");
-      Cookies.remove('token'); // Basic removal
-      Cookies.remove('token', { path: '/' }); // With path
-      
-      // Try with specific domain
-      try {
-        Cookies.remove('token', { path: '/', domain: '.nstech.pt' });
-        console.log("Removed cookie with domain .nstech.pt");
-      } catch (e) {
-        console.log("Error removing cookie with domain .nstech.pt:", e);
-      }
-      
-      // Try with current domain
-      try {
-        const currentDomain = window.location.hostname;
-        Cookies.remove('token', { path: '/', domain: currentDomain });
-        console.log(`Removed cookie with domain ${currentDomain}`);
-      } catch (e) {
-        console.log(`Error removing cookie with domain ${window.location.hostname}:`, e);
-      }
       
       // Show success message
       alert("Logout efetuado com sucesso!");
       
-      // Add a small delay before redirecting to ensure the cookie is processed
-      console.log("Redirecting to home page in 500ms...");
-      setTimeout(() => {
-        // Force a full page reload to ensure all state is cleared
-        window.location.href = "/";
-      }, 500);
+      // Redirect to login page or refresh the current page
+      window.location.href = "/";
     } catch (error) {
       console.error("Error during logout:", error);
       alert("Erro ao efetuar logout. Por favor, tente novamente.");
@@ -72,8 +45,34 @@ export default function Home() {
   return (
     <GalleryProvider>
       <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
-        
-        
+        {/* Header with Logo and Logout Button */}
+        <div style={{ 
+          display: "flex", 
+          justifyContent: "space-between", 
+          alignItems: "center",
+          marginBottom: "20px"
+        }}>
+          <Logo />
+          <button
+            onClick={handleLogout}
+            style={{
+              background: "#dc3545",
+              color: "#fff",
+              border: "none",
+              padding: "8px 15px",
+              borderRadius: "5px",
+              cursor: "pointer",
+              fontSize: "14px",
+              fontWeight: "bold",
+              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+              transition: "background-color 0.3s ease"
+            }}
+            onMouseOver={(e) => e.currentTarget.style.background = "#c82333"}
+            onMouseOut={(e) => e.currentTarget.style.background = "#dc3545"}
+          >
+            Logout
+          </button>
+        </div>
 
         {/* Componente de Upload de Ficheiros */}
         <FileUpload />
