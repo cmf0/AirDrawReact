@@ -115,6 +115,25 @@ export default function Auth() {
         {/* ✅ Formulário de Login */}
         {!isLoading && (
           <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md border border-gray-700 flex flex-col items-center">
+                    <div style={{ 
+          display: "flex", 
+          flexDirection: "row", 
+          justifyContent: "flex-start", 
+          alignItems: "center", 
+          marginBottom: "30px",
+          paddingLeft: "20px"
+          }}>
+            <img src="/logo.png" alt="AirGallery" style={{ 
+              width: "80px", 
+              height: "80px",
+              marginRight: "20px"
+            }} />
+            <h1 style={{ 
+              fontSize: "2.5rem",
+              margin: 0,
+              fontWeight: "600"
+            }}>AirGallery</h1>
+          </div>
             <div className="flex items-center space-x-3 mb-4">
               <Image src="/logo.png" alt="AirDraw Logo" width={40} height={40} />
               <h2 className="text-2xl font-semibold">{messages.auth?.login_title}</h2>
