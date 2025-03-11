@@ -32,7 +32,9 @@ export default function Home() {
       
       // Clear the token cookie using document.cookie
       // Try multiple approaches to ensure the cookie is cleared
-      document.cookie.delete("token");
+      document.cookie = "token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT;";
+      document.cookie = "token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Domain=.nstech.pt;";
+      document.cookie = "token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Domain=.nstech.pt; Secure; SameSite=None;";
       
       // Show success message
       alert("Logout efetuado com sucesso!");
