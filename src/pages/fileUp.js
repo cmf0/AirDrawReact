@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { GalleryProvider } from "../context/GalleryContext";
 import FileUpload from "../components/FileUpload";
 import ImageDisplay from "../components/ImageDisplay";
-import axiosInstance from "../utils/axiosInstance";
+import axiosInstance from "../lib/axiosInstance";
 import Cookies from 'js-cookie';
 
 export default function Home() {
