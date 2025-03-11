@@ -1,11 +1,15 @@
 import { useState, useRef, useEffect } from "react";
-import { GalleryProvider } from "../context/GalleryContext";
+import { GalleryProvider, useGallery } from "../context/GalleryContext";
 import FileUpload from "../components/FileUpload";
 import ImageDisplay from "../components/ImageDisplay";
 import Logo from "../components/ui/Logo";
+import axios from "axios";
+import { useRouter } from "next/router";
+
 export default function Home() {
   const [showMore, setShowMore] = useState(false);
   const sectionRef = useRef(null);
+  const router = useRouter();
 
   useEffect(() => {
     if (showMore && sectionRef.current) {
@@ -17,11 +21,57 @@ export default function Home() {
     }
   }, [showMore]);
 
+  const handleLogout = async () => {
+    try {
+      // Call the logout API endpoint
+      const API_URL = process.env.NEXT_PUBLIC_APIS_URL_REMOTE;
+      await axios.post(`${API_URL}/api/logout`, {}, { withCredentials: true });
+      
+      // Clear the auth token from localStorage
+      localStorage.removeItem('auth_token');
+      
+      // Show success message
+      alert("Logout efetuado com sucesso!");
+      
+      // Redirect to login page or refresh the current page
+      window.location.href = "/";
+    } catch (error) {
+      console.error("Error during logout:", error);
+      alert("Erro ao efetuar logout. Por favor, tente novamente.");
+    }
+  };
+
   return (
     <GalleryProvider>
       <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
-        <Logo />
-        
+        {/* Header with Logo and Logout Button */}
+        <div style={{ 
+          display: "flex", 
+          justifyContent: "space-between", 
+          alignItems: "center",
+          marginBottom: "20px"
+        }}>
+          <Logo />
+          <button
+            onClick={handleLogout}
+            style={{
+              background: "#dc3545",
+              color: "#fff",
+              border: "none",
+              padding: "8px 15px",
+              borderRadius: "5px",
+              cursor: "pointer",
+              fontSize: "14px",
+              fontWeight: "bold",
+              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+              transition: "background-color 0.3s ease"
+            }}
+            onMouseOver={(e) => e.currentTarget.style.background = "#c82333"}
+            onMouseOut={(e) => e.currentTarget.style.background = "#dc3545"}
+          >
+            Logout
+          </button>
+        </div>
 
         {/* Componente de Upload de Ficheiros */}
         <FileUpload />
