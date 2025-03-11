@@ -72,81 +72,56 @@ export default function Home() {
 
   return (
     <GalleryProvider>
-      <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
+      <div className="p-4 md:p-6 font-sans">
         {/* Header with Logo and Logout Button */}
-        <div style={{ 
-          display: "flex", 
-          justifyContent: "space-between", 
-          alignItems: "center",
-          marginBottom: "20px"
-        }}>
-          <Logo />
+        <div className="flex justify-between items-center mb-6">
+          <div className="w-32 md:w-40">
+            <Logo />
+          </div>
           <button
             onClick={handleLogout}
-            style={{
-              background: "#dc3545",
-              color: "#fff",
-              border: "none",
-              padding: "8px 15px",
-              borderRadius: "5px",
-              cursor: "pointer",
-              fontSize: "14px",
-              fontWeight: "bold",
-              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-              transition: "background-color 0.3s ease"
-            }}
-            onMouseOver={(e) => e.currentTarget.style.background = "#c82333"}
-            onMouseOut={(e) => e.currentTarget.style.background = "#dc3545"}
+            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-semibold shadow-sm transition-colors duration-200"
           >
             Logout
           </button>
         </div>
 
-        {/* Componente de Upload de Ficheiros */}
-        <FileUpload />
-        <hr />
+        {/* File Upload Component */}
+        <div className="w-full max-w-3xl mx-auto">
+          <FileUpload />
+        </div>
+        <hr className="my-6" />
 
-        {/* Galeria de Imagens */}
+        {/* Image Gallery */}
         <ImageDisplay />
-        <br />
-        <hr />
+        <hr className="my-6" />
 
-        {/* Secção de Explicação */}
+        {/* Explanation Section */}
         <section
           ref={sectionRef}
-          style={{
-            background: "#f9f9f9",
-            border: "1px solid #ddd",
-            borderRadius: "8px",
-            padding: "15px",
-            marginBottom: "20px",
-            fontSize: "14px",
-            lineHeight: "1.4em",
-            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-            width: showMore ? "100%" : "200px",
-            margin: showMore ? "20px 0" : "20px auto",
-            transition: "width 0.3s ease-in-out"
-          }}
+          className={`bg-gray-50 border border-gray-200 rounded-lg p-4 md:p-6 mb-6 text-sm leading-relaxed shadow-md transition-all duration-300 ${
+            showMore ? 'w-full' : 'w-48 md:w-64 mx-auto'
+          }`}
         >
           {showMore && (            
-            <div>
-              <h2 style={{ marginTop: 0, color: "#333", fontSize: "16px" }}>O que é a IPFS e a Blockchain?</h2>
-              <p style={{ color: "#555" }}>
+            <div className="space-y-4">
+              <h2 className="mt-0 text-gray-800 text-lg font-semibold">O que é a IPFS e a Blockchain?</h2>
+              <p className="text-gray-600">
                 A <strong>IPFS</strong> (InterPlanetary File System) permite armazenar ficheiros de forma descentralizada na Blockchain, distribuindo
                 os dados por uma rede de computadores (nós), em vez de depender de um único servidor centralizado como
                 em servidores da Google ou da Amazon.
               </p>
-              <h2 style={{ marginTop: "20px", color: "#333", fontSize: "16px" }}>Como funciona?</h2>
-              <p style={{ color: "#555" }}>
+              <h2 className="mt-4 text-gray-800 text-lg font-semibold">Como funciona?</h2>
+              <p className="text-gray-600">
                 A <strong>blockchain</strong> regista o identificador único dos ficheiros, chamado
                 <strong> hash (CID)</strong>, que é devidamente encriptado, garantindo a integridade e referência ao ficheiro original.
               </p>
-              <p style={{ color: "#555" }}>
+              <p className="text-gray-600">
                 Quando um ficheiro é <strong>"removido" o vinculo direto entre o nó (referência do Hash/CID - Content identifier) e o ficheiro é eliminado (unpinned)</strong>, ele deixa de estar armazenado no nó responsável,
                 mas o hash continua a existir na blockchain. Esse processo permite a remoção eficiente do ficheiro sem comprometer a descentralização.
               </p>
-              <h3 style={{ marginTop: "20px", color: "#333", fontSize: "16px" }}>Vantagens de armazenar na Blockchain:</h3>
-              <ul style={{ marginLeft: "20px", color: "#555" }}>
+              <h3 className="mt-4 text-gray-800 text-lg font-semibold">Vantagens de armazenar na Blockchain:</h3>
+              <ul className="list-disc text-gray-600 pl-6">
                 <li>
                   <strong>Segurança e disponibilidade:</strong> Os ficheiros são distribuídos por uma rede global, tornando-os
                   imunes a ataques ou bloqueios centralizados.
@@ -169,42 +144,31 @@ export default function Home() {
                 </li>
               </ul>
 
-              <h3 style={{ fontSize: "16px", marginTop: "15px", color: "#333" }}>
+              <h3 className="mt-4 text-gray-800 text-lg font-semibold">
                 Possibilidade de camadas complementares de privacidade e controlo:
               </h3>
-              <ul style={{ marginLeft: "20px", color: "#555" }}>
+              <ul className="list-disc text-gray-600 pl-6">
                 <li>Encriptação antes do upload para garantir privacidade do conteúdo.</li>
                 <li>Monitorização e remoção proativa para evitar cópias indesejadas.</li>
                 <li>Redes IPFS privadas para maior controlo e exclusividade.</li>
                 <li>Gateways privados com autenticação para limitar o acesso.</li>
               </ul>
-              <p style={{ color: "#555" }}>
+              <p className="text-gray-600">
                 Essas estratégias garantem maior segurança e controlo dos ficheiros na Blockchain no ecossistema IPFS.
               </p>
             </div>
           )}
-          <div style={{ 
-            display: "flex", 
-            justifyContent: showMore ? "flex-start" : "center"
-          }}>
-            <button
-              onClick={() => setShowMore(!showMore)}
-              style={{
-                marginTop: "10px",
-                background: "#007BFF",
-                color: "#fff",
-                border: "none",
-                padding: "5px 10px",
-                borderRadius: "5px",
-                cursor: "pointer",
-                fontSize: "14px",
-              }}
-            >
-              {showMore ? "Entendido!" : "Como funciona?"}
-            </button>
-          </div>
+          {!showMore && (
+            <div className="text-center">
+              <button
+                onClick={() => setShowMore(true)}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm transition-colors duration-200"
+              >
+                Como funciona?
+              </button>
+            </div>
+          )}
         </section>
-
       </div>
     </GalleryProvider>
   );

@@ -1,11 +1,15 @@
 import { toast } from "react-toastify";
 import { useGallery } from "../context/GalleryContext";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { GalleryContext as GalleryContextImport } from '../context/GalleryContext';
+import ImageModal from './ImageModal';
 
 export default function ImageDisplay() {
   const { files, loading, deleteFile } = useGallery();
   const API_URL = process.env.NEXT_PUBLIC_APIS_URL_REMOTE;
   const [imageErrors, setImageErrors] = useState({});
+  const { images, setImages } = useContext(GalleryContextImport);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   // Debug: Log the files data structure
   useEffect(() => {
@@ -53,6 +57,19 @@ export default function ImageDisplay() {
     }
     
     return gateways[errorCount];
+  };
+
+  const handleImageClick = (image) => {
+    setSelectedImage(image);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedImage(null);
+  };
+
+  const handleDeleteImage = (ipfsHash) => {
+    // Update the images list after deletion
+    setImages(images.filter(img => img.ipfsHash !== ipfsHash));
   };
 
   if (loading) {
@@ -128,6 +145,15 @@ export default function ImageDisplay() {
           <p>Não há ficheiros disponíveis na Blockchain IPFS.</p>
         )}
       </div>
+
+      {selectedImage && (
+        <ImageModal
+          imageUrl={`https://gateway.pinata.cloud/ipfs/${selectedImage.ipfsHash}`}
+          ipfsHash={selectedImage.ipfsHash}
+          onClose={handleCloseModal}
+          onDelete={handleDeleteImage}
+        />
+      )}
     </div>
   );
 }
