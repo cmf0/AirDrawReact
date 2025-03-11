@@ -73,101 +73,50 @@ export default function FileUpload() {
   };
 
   return (
-    <div style={{
-      padding: "20px",
-      backgroundColor: "#f8f9fa",
-      borderRadius: "10px",
-      boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-      marginBottom: "20px"
-    }}>
-      <h3 style={{
-        fontSize: "1.2rem",
-        color: "#333",
-        marginBottom: "15px",
-        fontWeight: "600"
-      }}>Upload de Ficheiros para Blockchain</h3>
+    <div className="p-5 bg-gray-50 rounded-lg shadow-sm mb-5">
+      <h3 className="text-lg md:text-xl text-gray-800 mb-4 font-semibold">
+        Upload de Ficheiros para Blockchain
+      </h3>
       
-      <div style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "10px"
-      }}>
-        <div style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "10px"
-        }}>
-          <div style={{
-            position: "relative",
-            flex: "1",
-            minWidth: 0 // Add this to prevent flex item from overflowing
-          }}>
-            <div style={{
-              display: "flex",
-              alignItems: "center",
-              border: "2px dashed #ccc",
-              borderRadius: "5px",
-              backgroundColor: "white",
-              padding: "8px",
-              gap: "10px",
-              flex: "1",
-              minWidth: 0
-            }}>
-              <input 
-                type="file" 
-                ref={fileInputRef}
-                onChange={handleFileChange}
-                style={{
-                  width: "140px",
-                  flexShrink: 0
-                }}
-              />
-              {selectedFile && (
-                <div style={{
-                  flex: "1",
-                  color: "#666",
-                  overflow: "hidden",
-                  whiteSpace: "nowrap",
-                  textOverflow: "ellipsis",
-                  minWidth: 0
-                }}>
-                  {selectedFile.name}
-                </div>
-              )}
-            </div>
-          </div>
-          <button 
-            onClick={handleUpload} 
-            disabled={loading}
-            style={{
-              backgroundColor: loading ? "#ccc" : "#007bff",
-              color: "white",
-              padding: "10px 20px",
-              border: "none",
-              borderRadius: "5px",
-              cursor: loading ? "not-allowed" : "pointer",
-              fontWeight: "500",
-              transition: "background-color 0.3s ease",
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-              whiteSpace: "nowrap",
-              flexShrink: 0, // Prevent button from shrinking
-              marginLeft: "10px" // Ensure consistent spacing
-            }}
-          >
-            {loading ? (
-              <>
-                <span style={{ display: "inline-block", animation: "spin 1s linear infinite" }}>⌛</span>
-                A carregar...
-              </>
-            ) : (
-              <>
-                Upload para Blockchain
-              </>
+      <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
+        <div className="flex-1 min-w-0 w-full">
+          <div className="flex items-center border-2 border-dashed border-gray-300 rounded bg-white p-2 gap-2">
+            <input 
+              type="file" 
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              className="w-[140px] flex-shrink-0"
+            />
+            {selectedFile && (
+              <div className="flex-1 text-gray-600 truncate min-w-0">
+                {selectedFile.name}
+              </div>
             )}
-          </button>
+          </div>
         </div>
+        
+        <button 
+          onClick={handleUpload} 
+          disabled={loading}
+          className={`
+            flex items-center gap-2 px-4 py-2 rounded
+            font-medium text-white whitespace-nowrap
+            transition-colors duration-300
+            ${loading 
+              ? 'bg-gray-400 cursor-not-allowed' 
+              : 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
+            }
+          `}
+        >
+          {loading ? (
+            <>
+              <span className="inline-block animate-spin">⌛</span>
+              A carregar...
+            </>
+          ) : (
+            'Upload para Blockchain'
+          )}
+        </button>
       </div>
     </div>
   );
