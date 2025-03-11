@@ -24,23 +24,26 @@ export default function Home() {
 
   const handleLogout = async () => {
     try {
+      console.log("Starting logout process...");
+      
       // Call the logout API endpoint using the configured axios instance
-      await axiosInstance.post("/api/logout");
+      // The server will handle clearing the HttpOnly cookie
+      const response = await axiosInstance.post("/api/logout");
+      console.log("Logout API response:", response.data);
       
       // Clear the auth token from localStorage
       localStorage.removeItem('auth_token');
-      
-      // Clear the token cookie using document.cookie
-      // Try multiple approaches to ensure the cookie is cleared
-      document.cookie = "token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT;";
-      document.cookie = "token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Domain=.nstech.pt;";
-      document.cookie = "token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Domain=.nstech.pt; Secure; SameSite=None;";
+      console.log("Cleared auth_token from localStorage");
       
       // Show success message
       alert("Logout efetuado com sucesso!");
       
-      // Redirect to login page or refresh the current page
-      window.location.href = "/";
+      // Add a small delay before redirecting to ensure the cookie is processed
+      console.log("Redirecting to home page in 500ms...");
+      setTimeout(() => {
+        // Force a full page reload to ensure all state is cleared
+        window.location.href = "/";
+      }, 500);
     } catch (error) {
       console.error("Error during logout:", error);
       alert("Erro ao efetuar logout. Por favor, tente novamente.");
