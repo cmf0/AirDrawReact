@@ -106,35 +106,28 @@ export default function Auth() {
       </Head>
 
       {/* ✅ Header with Logo and DB Status */}
-      <div className="container-fluid fixed-top">
-        <div className="row p-3">
-          <div className="col-4">
-            <Logo />
-          </div>
-          <div className="col-4"></div>
-          <div className="col-4 d-flex justify-content-end">
-            {!isLoading && (
-              <div className="d-flex align-items-center gap-2">
-                {serverError === true ? (
-                  <>
-                    <FiAlertTriangle className="text-danger fs-5 animate-bounce" />
-                    <p className="text-secondary mb-0 small">{messages.server?.server_offline}</p>
-                  </>
-                ) : dbStatus === "online" ? (
-                  <>
-                    <p className="text-secondary mb-0 small">{messages.database?.db_online}</p>
-                    <span className="rounded-circle bg-success" style={{ width: '12px', height: '12px', animation: 'pulse 2s infinite' }} />
-                  </>
-                ) : (
-                  <>
-                    <p className="text-secondary mb-0 small">{messages.database?.db_offline}</p>
-                    <span className="rounded-circle bg-danger" style={{ width: '12px', height: '12px', animation: 'pulse 2s infinite' }} />
-                  </>
-                )}
-              </div>
+      <div className="fixed top-0 left-0 right-0 w-full px-6 py-4 flex justify-between items-center">
+        <Logo />
+        {!isLoading && (
+          <div className="flex items-center space-x-2">
+            {serverError === true ? (
+              <>
+                <FiAlertTriangle className="text-red-500 text-xl animate-bounce" />
+                <p className="text-sm text-gray-300">{messages.server?.server_offline}</p>
+              </>
+            ) : dbStatus === "online" ? (
+              <>
+                <p className="text-sm text-gray-300">{messages.database?.db_online}</p>
+                <span className="w-3 h-3 rounded-full bg-green-500 animate-pulse" />
+              </>
+            ) : (
+              <>
+                <p className="text-sm text-gray-300">{messages.database?.db_offline}</p>
+                <span className="w-3 h-3 rounded-full bg-red-500 animate-pulse" />
+              </>
             )}
           </div>
-        </div>
+        )}
       </div>
 
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-black text-white relative">
