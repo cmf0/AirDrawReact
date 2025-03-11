@@ -3,9 +3,8 @@ import { GalleryProvider, useGallery } from "../context/GalleryContext";
 import FileUpload from "../components/FileUpload";
 import ImageDisplay from "../components/ImageDisplay";
 import Logo from "../components/ui/Logo";
-import axios from "axios";
 import { useRouter } from "next/router";
-import Cookies from "js-cookie";
+import axiosInstance from "../lib/axiosInstance";
 
 export default function Home() {
   const [showMore, setShowMore] = useState(false);
@@ -24,21 +23,16 @@ export default function Home() {
 
   const handleLogout = async () => {
     try {
-      // Call the logout API endpoint
-      const API_URL = process.env.NEXT_PUBLIC_APIS_URL_REMOTE;
-      await axios.post(`${API_URL}/api/logout`, {}, { withCredentials: true });
+      // Call the logout API endpoint using the configured axios instance
+      await axiosInstance.post("/api/logout");
       
       // Clear the auth token from localStorage
       localStorage.removeItem('auth_token');
       
-      // Clear the token cookie from browser cookies
-      Cookies.remove('token');
-      
-      // Also try to clear the cookie with specific domain and path settings
-      // This is a fallback in case the cookie has specific domain/path settings
-      Cookies.remove('token', { path: '/', domain: '.nstech.pt' });
-      
-      // For cookies that might not be accessible via js-cookie
+      // Clear the token cookie using document.cookie
+      // Try multiple approaches to ensure the cookie is cleared
+      document.cookie = "token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT;";
+      document.cookie = "token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Domain=.nstech.pt;";
       document.cookie = "token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Domain=.nstech.pt; Secure; SameSite=None;";
       
       // Show success message
