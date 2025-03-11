@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { GalleryProvider } from "../context/GalleryContext";
 import FileUpload from "../components/FileUpload";
 import ImageDisplay from "../components/ImageDisplay";
-
+import Logo from "../components/ui/Logo";
 export default function Home() {
   const [showMore, setShowMore] = useState(false);
   const sectionRef = useRef(null);
@@ -20,25 +20,7 @@ export default function Home() {
   return (
     <GalleryProvider>
       <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
-        <div style={{ 
-          display: "flex", 
-          flexDirection: "row", 
-          justifyContent: "flex-start", 
-          alignItems: "center", 
-          marginBottom: "30px",
-          paddingLeft: "20px"
-        }}>
-          <img src="/logo.png" alt="AirGallery" style={{ 
-            width: "80px", 
-            height: "80px",
-            marginRight: "20px"
-          }} />
-          <h1 style={{ 
-            fontSize: "2.5rem",
-            margin: 0,
-            fontWeight: "600"
-          }}>AirGallery</h1>
-        </div>
+        <Logo />
         
 
         {/* Componente de Upload de Ficheiros */}

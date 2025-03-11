@@ -106,8 +106,9 @@ export default function Auth() {
       </Head>
 
       {/* ✅ Estrutura da Página */}
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-black text-white relative">
       <Logo />
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-black text-white relative">
+      
         {/* ✅ Animação de Carregamento antes de renderizar o conteúdo */}
         {isLoading && (
           <Loading/>
